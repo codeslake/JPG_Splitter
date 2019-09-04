@@ -22,7 +22,6 @@ _, filepaths, num = load_file_list('inputs')
 if num == 1:
     filepaths = np.expand_dims(filepaths, 0)
 
-print(filepaths)
 for filepath in filepaths:
     # a. open image
     filename = os.path.basename(filepath).split('.')[0]
