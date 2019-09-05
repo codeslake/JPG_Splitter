@@ -6,6 +6,7 @@ This repository contains the implementation of jpg image splitter for those jpg 
 ## Running the program.
 To run the program, first place jpg image that you want to split in to `inputs` folder.
 The, type:
+
 ```bash
 python split.py
 ```
