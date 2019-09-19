@@ -25,6 +25,7 @@ if num == 1:
 for filepath in filepaths:
     # a. open image
     filename = os.path.basename(filepath).split('.')[0]
+    print(filename)
     with open(filepath, 'rb') as f:
         data = f.read()
     f.close()
