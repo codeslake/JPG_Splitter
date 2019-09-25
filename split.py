@@ -7,8 +7,8 @@ import cv2
 from utils import *
 
 #######################################################
-start_ptrn = 'ffd8'
-end_ptrn = 'ffd9'
+start_ptrn = 'ffd8ff'
+end_ptrn = 'ffd3ffd900'
 save_path_narrow = 'outputs/narrow'
 save_path_wide = 'outputs/wide'
 #######################################################
@@ -22,10 +22,15 @@ _, filepaths, num = load_file_list('inputs')
 if num == 1:
     filepaths = np.expand_dims(filepaths, 0)
 
+num_file = 0
 for filepath in filepaths:
+    num_file+=1
     # a. open image
     filename = os.path.basename(filepath).split('.')[0]
-    print(filename)
+    print('***********************')
+    print(num_file, ': ', filename)
+    print('***********************')
+
     with open(filepath, 'rb') as f:
         data = f.read()
     f.close()
@@ -34,15 +39,20 @@ for filepath in filepaths:
     # b. split images
     images = []
     end_idx_ = 0
+    i = 0
     while True:
         image, start_idx, end_idx_ = get_start_end_idx(data, start_ptrn, end_ptrn, end_idx_)
+        print('found image #', i)
         if image != -1:
             images.append(image)
         else:
             break;
+        i+=1
+    print('')
 
     # c. save images
     print('number of hidden images: ', len(images))
+    print('\nsplitting..')
     for i in np.arange(1, len(images)):
         image = binascii.unhexlify(images[i].encode())
         f = open('{}.jpg'.format(filename), 'wb')
@@ -56,3 +66,5 @@ for filepath in filepaths:
             cv2.imwrite('{}/{}.png'.format(save_path_wide, filename), image)
 
         os.remove('{}.jpg'.format(filename))
+        print('splitted image #', i)
+    print('')

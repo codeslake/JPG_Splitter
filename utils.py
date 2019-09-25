@@ -67,18 +67,22 @@ def get_start_end_idx(data, start_ptrn, end_ptrn, end_idx):
     start_idx_temp = end_idx
     while start_idx % 2 != 0:
         start_idx = data.find(start_ptrn, start_idx_temp)
-        start_idx_temp += 1
+        start_idx_temp = start_idx + 4
         if start_idx == -1:
             return -1, None, None
+    print('start_idx: ', hex(int(start_idx/2)))
 
     end_idx = 1
-    end_idx_temp = start_idx + 1
+    end_idx_temp = start_idx + 4
     while end_idx % 2 != 0:
         end_idx = data.find(end_ptrn, end_idx_temp)
-        end_idx_temp = end_idx + 1
+        end_idx_temp = end_idx + 4
         if end_idx == -1:
             break;
+    end_idx += 8
 
-    data_temp = data[start_idx:end_idx+4]
+    print('end_idx: ', hex(int(end_idx/2)))
+
+    data_temp = data[start_idx:end_idx]
 
     return data_temp, start_idx, end_idx
